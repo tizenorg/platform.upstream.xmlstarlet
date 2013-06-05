@@ -1,0 +1,30 @@
+--- src/xml_depyx.c.orig	2011-02-17 09:53:27.000000000 +0100
++++ src/xml_depyx.c	2011-02-17 10:00:13.000000000 +0100
+@@ -115,6 +115,7 @@
+ {
+    static char line[INSZ];
+    FILE *in = stdin;
++   int opened_in = 0;
+ 
+    if (strcmp(file, "-"))
+    {
+@@ -124,6 +125,7 @@
+           fprintf(stderr, "error: could not open: %s\n", file);
+           exit(EXIT_BAD_FILE);
+        }
++       opened_in = 1;
+    }
+    
+    while (!feof(in))
+@@ -216,6 +218,11 @@
+        }
+    }
+ 
++   if (opened_in)
++   {
++       fclose(in);
++   }
++
+    return EXIT_SUCCESS;
+ }
+ 
